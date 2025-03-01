@@ -48,17 +48,34 @@ export const createOrder = async (order: CreateOrderParams) => {
   try {
     await connectToDatabase();
     
+    console.log('Creating order with data:', order);
+
     const newOrder = await Order.create({
       ...order,
       event: order.eventId,
       buyer: order.buyerId,
     });
 
+    console.log('Order created successfully:', newOrder);
+
+    
+    console.log(`
+      ORDER CONFIRMATION:
+      -----------------------
+      Order ID: ${newOrder._id}
+      Buyer ID: ${newOrder.buyer}
+      Event ID: ${newOrder.event}
+      Total Amount: ${newOrder.totalAmount}
+      Created At: ${newOrder.createdAt}
+    `);
+
     return JSON.parse(JSON.stringify(newOrder));
   } catch (error) {
+    console.error('Error creating order:', error);
     handleError(error);
   }
-}
+};
+
 
 // GET ORDERS BY EVENT
 export async function getOrdersByEvent({ searchString, eventId }: GetOrdersByEventParams) {

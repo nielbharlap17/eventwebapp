@@ -21,7 +21,7 @@ export type IOrderItem = {
   createdAt: Date
   eventTitle: string
   eventId: string
-  buyer: string
+  buyerId: string
 }
 
 const OrderSchema = new Schema({
